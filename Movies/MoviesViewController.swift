@@ -61,7 +61,10 @@ class MoviesViewController: UIViewController {
                             if let Data = responseDictionary["results"] as? [NSDictionary] {
                                 self.data = Data
                                 self.tbvMovies.reloadData()
-                            }
+                            }//;if let Datadate = responseDictionary["dates"] as? [NSDate] {
+                                //self.date = Datadate
+                               // self.tbvMovies.reloadData()
+                            //}
                         }
                     }
             })
@@ -73,6 +76,12 @@ class MoviesViewController: UIViewController {
         let desVC = segue.destination as! DeitailMoviesViewController
         let indexPath = tbvMovies.indexPath(for: sender as! UITableViewCell)
         desVC.urlImageDetail = postfirstURL + (data[(indexPath?.row)!]["poster_path"] as! String)
+        desVC.date = data[(indexPath?.row)!]["release_date"] as! String
+        desVC.name = data[(indexPath?.row)!]["original_title"] as! String
+        desVC.content = data[(indexPath?.row)!]["overview"] as! String
+        let vote = data[(indexPath?.row)!]["vote_average"] as! Int
+        let voter = vote * 10
+        desVC.voterate = voter
     }
 
 }
