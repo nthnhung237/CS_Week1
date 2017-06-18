@@ -8,10 +8,15 @@
 
 import UIKit
 
-class DeitailMoviesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class DeitailMoviesViewController: UIViewController {
 
     @IBOutlet weak var imgDetail: UIImageView!
-    @IBOutlet weak var tbvDetail: UITableView!
+    @IBOutlet weak var srollContend: UIScrollView!
+    @IBOutlet weak var viewContend: UIView!
+    
+    @IBOutlet weak var lbNam: UILabel!
+    @IBOutlet weak var lbDate: UILabel!
+    @IBOutlet weak var lbContend: UILabel!
     
     var urlImageDetail = String()
     var date = String()
@@ -22,9 +27,11 @@ class DeitailMoviesViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         imgDetail.setImageWith(NSURL(string: urlImageDetail)! as URL)
-        tbvDetail.delegate = self
-        tbvDetail.dataSource = self
         // Do any additional setup after loading the view.
+        self.srollContend.contentSize = CGSize(width: self.srollContend.frame.size.width, height: self.viewContend.frame.origin.y + self.viewContend.frame.height)
+        self.lbNam.text = name
+        self.lbDate.text = date
+        self.lbContend.text = content
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,6 +39,9 @@ class DeitailMoviesViewController: UIViewController, UITableViewDelegate, UITabl
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
+    }
 
     /*
     // MARK: - Navigation
@@ -43,15 +53,4 @@ class DeitailMoviesViewController: UIViewController, UITableViewDelegate, UITabl
     }
     */
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let Cell = tableView.dequeueReusableCell(withIdentifier: "IDDetailCell", for: indexPath) as? DetailTableViewCell
-        Cell?.lbDate.text = date 
-        Cell?.lbName.text = name
-        Cell?.lbContend.text = content
-        return Cell!
-    }
 }
